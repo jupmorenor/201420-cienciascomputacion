@@ -48,6 +48,7 @@ template <typename R> struct Nodo {
 template <class T> class AgenciaMatrimonial {
 	Nodo<T> *cabeza;
 	Nodo<T> *crear_nodo(std::string id);
+	subNodo<T> *crear_subnodo(std::string id);
 
 public:
 	AgenciaMatrimonial();
