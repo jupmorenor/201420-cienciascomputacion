@@ -49,15 +49,17 @@ template <class T> class AgenciaMatrimonial {
 	Nodo<T> *cabeza;
 	Nodo<T> *crear_nodo(std::string id);
 	subNodo<T> *crear_subnodo(std::string id);
-
+	Nodo<T> inline *buscar_nodo(std::string id);
+	subNodo<T> inline *buscar_subnodo(std::string id, Nodo<T> *nodo);
 public:
 	AgenciaMatrimonial();
 	~AgenciaMatrimonial();
-	void insertarPorSexo(T aff);
-	void insertarPorEdad(T aff);
-	void insertarPorNivelAcademico(T aff);
-	void insertarPorComplexion(T aff);
-	void insertarPorEstatura(T aff);
+	void insertarPorSexo(T *aff);
+	void insertarPorEdad(T *aff);
+	void insertarPorNivelAcademico(T *aff);
+	void insertarPorComplexion(T *aff);
+	void insertarPorEstatura(T *aff);
+	int calcularEdad(T *aff);
 	//TODO otros metodos adicionales
 };
 
