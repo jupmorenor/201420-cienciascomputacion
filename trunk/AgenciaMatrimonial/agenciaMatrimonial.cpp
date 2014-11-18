@@ -6,6 +6,7 @@
  *      Author: Diana Cristhina Pérez Pérez - 20111020069
  */
 
+#include <time.h>
 #include "agenciaMatrimonial.h"
 
 const std::string LISTAS[] = {"SEXO", "EDAD", "NVACADEMICO", "COMPLEXION", "ESTATURA"};
@@ -81,8 +82,28 @@ template <class T> AgenciaMatrimonial<T>::AgenciaMatrimonial() {
 	}
 }
 
+/**
+ * Libera la memoria ocupada por la multilista
+ */
 template <class T> AgenciaMatrimonial<T>::~AgenciaMatrimonial() {
-	//TODO
+	Nodo<T> *lista;
+	subNodo<T> *sublista;
+	T *registro;
+	for (lista=cabeza->siguiente; lista!=NULL; lista=lista->siguiente) {
+		for (sublista=lista->sublista->siguiente; sublista!=NULL; sublista=sublista->siguiente) {
+			for(registro=sublista->registro->siguiente; registro!=NULL; registro=registro->siguiente) {
+				delete sublista;
+				sublista = registro;
+			}
+			delete registro;
+			delete lista;
+			lista = sublista;
+		}
+		delete sublista;
+		delete cabeza;
+		cabeza = lista;
+	}
+	delete lista;
 }
 
 /**
@@ -103,12 +124,53 @@ template <class T> void AgenciaMatrimonial<T>::insertarPorSexo(T *aff) {
 	}
 }
 
+/**
+ * Inserta un afiliado por orden ascendente (menor a mayor ) de edad
+ * de forma ordenada en la lista que le corresponde
+ */
 template <class T> void AgenciaMatrimonial<T>::insertarPorEdad(T *aff) {
 	Nodo<T> *lista = buscar_nodo(LISTAS[1]);
 	subNodo<T> *sublista;
 	T *registro;
-	//cuando se calcula la edad?
-	//TODO
+	int edad, edadAux, e;
+	edad = calcularEdad(aff);
+	e = 25;
+	if (edad >= 19 && edad <= 24) {
+		sublista = buscar_subnodo(EDAD[0], lista);
+	} else if (edad >= 25 && edad <= 35) {
+		sublista = buscar_subnodo(EDAD[1], lista);
+	} else if (edad >= 36 && edad <= 45){
+		sublista = buscar_subnodo(EDAD[2], lista);
+	} else if (edad >= 46 && edad <= 60) {
+		sublista = buscar_subnodo(EDAD[3], lista);
+	} else if (edad > 60) {
+		sublista = buscar_subnodo(EDAD[4], lista);
+	}
+
+	if (sublista->registro == NULL) {
+		sublista->registro = aff;
+	} else {
+		registro = sublista->registro;
+		edadAux = calcularEdad(registro);
+		if (edad < edadAux) {
+			aff->sigPorEdad = registro;
+			sublista->registro = aff;
+		} else {
+			while ((edad > edadAux) && (registro->sigPorEdad != NULL)) {
+				edadAux = calcularEdad(registro->sigPorEdad);
+				if (edad < edadAux) {
+					break;
+				}
+				registro = registro->sigPorEdad;
+			}
+			if (registro->sigPorEdad != NULL) {
+				aff->sigPorEdad = registro->sigPorEdad;
+				registro->sigPorEdad = aff;
+			} else {
+				registro->sigPorEdad = aff;
+			}
+		}
+	}
 }
 
 /**
@@ -148,17 +210,18 @@ template<class T> void AgenciaMatrimonial<T>::insertarPorComplexion(T *aff) {
 }
 
 /**
- * Inserta un afiliado por orden descendente de estatura de forma ordenada
- * en la lista que le corresponde
+ * Inserta un afiliado por orden descendente (mayor a menor) de estatura
+ * de forma ordenada en la lista que le corresponde
  */
 template<class T> void AgenciaMatrimonial<T>::insertarPorEstatura(T *aff) {
-	Nodo<T> *lista = buscar_nodo(LISTAS[1]);
+	Nodo<T> *lista = buscar_nodo(LISTAS[4]);
 	subNodo<T> *sublista;
 	T *registro;
 	int e = 150;
 	for (int i = 0; i<TAMS[4]; i++, e+=10) {
 		if (aff->estatura <= e || e > 180) {
 			sublista = buscar_subnodo(ESTATURA[i], lista);
+			break;
 		}
 	}
 	if (sublista->registro == NULL) {
@@ -185,7 +248,29 @@ template<class T> void AgenciaMatrimonial<T>::insertarPorEstatura(T *aff) {
 	}
 }
 
+/*
+ * Calcula la edad a partir de la fecha de nacimiento y la fecha actual
+ */
 template <class T> int AgenciaMatrimonial<T>::calcularEdad(T *aff) {
+	int edad;
 
-	//TODO aqui???
+	/* calculo de la fecha actual */
+	struct tm fechaActual;
+	time_t fechaSistema;
+	time(&fechaSistema);
+	fechaActual = localtime(&fechaSistema);
+
+	/* calculo de la edad */
+	if (fechaActual.tm_mon+1 > aff->nacimiento->mm) {
+		edad = fechaActual.tm_year+1900 - aff->nacimiento->aa;
+	} else if (fechaActual.tm_mon+1 < aff->nacimiento->mm) {
+		edad = fechaActual.tm_year+1900 - aff->nacimiento->aa - 1;
+	} else {
+		if (fechaActual.tm_mday >= aff->nacimiento->dd) {
+			edad = fechaActual.tm_year+1900 - aff->nacimiento->aa;
+		} else {
+			edad = fechaActual.tm_year+1900 - aff->nacimiento->aa - 1;
+		}
+	}
+	return edad;
 }
