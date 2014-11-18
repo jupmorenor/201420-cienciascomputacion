@@ -9,16 +9,6 @@
 #include <time.h>
 #include "agenciaMatrimonial.h"
 
-const std::string LISTAS[] = {"SEXO", "EDAD", "NVACADEMICO", "COMPLEXION", "ESTATURA"};
-const std::string SUBLISTAS[][] = {SEXO, EDAD, NVACADEMICO, COMPLEXION, ESTATURA};
-const char SEXO[] = {"M", "F"};
-const std::string EDAD[] = {"19A24", "25A35", "36A45", "46A60", "60MAS"};
-const std::string NVACADEMICO[] = {"BACHILLER", "TECNICO", "PROFESIONAL", "ESPECIALIZACION", "MAESTRIA", "DOCTORADO"};
-const std::string COMPLEXION[] = {"GRUESA", "NORMAL", "DELGADA"};
-const std::string ESTATURA[] = {"MENOS150", "151A160", "161A170", "171A180", "180MAS"};
-const int TAMS = {2, 5, 6, 3, 5};
-const int CANT = 5;
-
 /**
  * Crea un nodo cabeza de lista
  */
@@ -104,6 +94,7 @@ template <class T> AgenciaMatrimonial<T>::~AgenciaMatrimonial() {
 		cabeza = lista;
 	}
 	delete lista;
+	delete cabeza;
 }
 
 /**
@@ -273,4 +264,17 @@ template <class T> int AgenciaMatrimonial<T>::calcularEdad(T *aff) {
 		}
 	}
 	return edad;
+}
+
+/**
+ * Retorna la cabeza de una sublista dado su id
+ */
+template <class T> T *AgenciaMatrimonial<T>::buscarRegistro(std::string idLista, std::string idSublista) {
+	Nodo<T> lista;
+	subNodo<T> sublista;
+	T *registro;
+	lista = buscar_nodo(idLista);
+	sublista = buscar_subnodo(idSublista, lista);
+	registro = sublista->registro;
+	return registro;
 }
