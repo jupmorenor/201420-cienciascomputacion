@@ -6,7 +6,8 @@
  *      Author: Diana Cristhina Pérez Pérez - 20111020069
  */
 
-#include <string.h>
+#include <string>
+using std::string;
 
 #ifndef USUARIO_H_
 #define USUARIO_H_
@@ -16,12 +17,12 @@ class User {
 public:
 	User();
 	~User();
-	void mostrarPorOjosyRangoEstatura(std::string ojos, std::string estatura);
-	void mostrarPorEdadyHobbies(int edad, std::string hobbie1, std::string hobbie2);
-	void mostrarPorComplexionyNivelAcademico(std::string complexion, std::string nvAcademico);
-	void mostrarPorActividadLaborarNivelAcademico(std::string aLaboral, std::string nvAcademico);
-	void mostrarPorCiudadNumeroHijos(std::string ciudad, int hijos);
-	void mostrarCombinado(std::string ojos, std::string estatura, bool hijos, std::string complexion);
+	void mostrarPorOjosyRangoEstatura(string ojos, string estatura);
+	void mostrarPorEdadyHobbies(int edad, string hobbie1, string hobbie2);
+	void mostrarPorComplexionyNivelAcademico(string complexion, string nvAcademico);
+	void mostrarPorActividadLaborarNivelAcademico(string aLaboral, string nvAcademico);
+	void mostrarPorCiudadNumeroHijos(string ciudad, int hijos);
+	void mostrarCombinado(string ojos, string estatura, bool hijos, string complexion);
 };
 
 #endif /* USUARIO_H_ */

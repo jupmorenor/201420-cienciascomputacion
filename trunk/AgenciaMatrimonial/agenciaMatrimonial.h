@@ -6,18 +6,19 @@
  *      Author: Diana Cristhina Pérez Pérez - 20111020069
  */
 
-#include <string.h>
+#include <string>
+using std::string;
 
 #ifndef AGENCIAMATRIMONIAL_H_
 #define AGENCIAMATRIMONIAL_H_
 
-const std::string LISTAS[] = {"SEXO", "EDAD", "NVACADEMICO", "COMPLEXION", "ESTATURA"};
-const std::string SUBLISTAS[][] = {SEXO, EDAD, NVACADEMICO, COMPLEXION, ESTATURA};
+const string LISTAS[] = {"SEXO", "EDAD", "NVACADEMICO", "COMPLEXION", "ESTATURA"};
+const string SUBLISTAS[][] = {SEXO, EDAD, NVACADEMICO, COMPLEXION, ESTATURA};
 const char SEXO[] = {"M", "F"};
-const std::string EDAD[] = {"19A24", "25A35", "36A45", "46A60", "60MAS"};
-const std::string NVACADEMICO[] = {"BACHILLER", "TECNICO", "PROFESIONAL", "ESPECIALIZACION", "MAESTRIA", "DOCTORADO"};
-const std::string COMPLEXION[] = {"GRUESA", "NORMAL", "DELGADA"};
-const std::string ESTATURA[] = {"MENOS150", "151A160", "161A170", "171A180", "180MAS"};
+const string EDAD[] = {"19A24", "25A35", "36A45", "46A60", "60MAS"};
+const string NVACADEMICO[] = {"BACHILLER", "TECNICO", "PROFESIONAL", "ESPECIALIZACION", "MAESTRIA", "DOCTORADO"};
+const string COMPLEXION[] = {"GRUESA", "NORMAL", "DELGADA"};
+const string ESTATURA[] = {"MENOS150", "151A160", "161A170", "171A180", "180MAS"};
 const int TAMS = {2, 5, 6, 3, 5};
 const int CANT = 5;
 
@@ -26,14 +27,14 @@ struct Fecha {
 };
 
 struct Afiliado {
-	std::string nombre;
-	std::string email;
-	std::string ciudad;
-	std::string ojos;
-	std::string complexion;
-	std::string hobbies[2];
-	std::string nivelAcademico;
-	std::string actividadLaboral;
+	string nombre;
+	string email;
+	string ciudad;
+	string ojos;
+	string complexion;
+	string hobbies[2];
+	string nivelAcademico;
+	string actividadLaboral;
 	Fecha nacimiento;
 	char sexo;
 	int estatura;
@@ -42,23 +43,23 @@ struct Afiliado {
 };
 
 template <typename S> struct subNodo {
-	std::string ID;
+	string ID;
 	S *registro;
 	subNodo<S> *siguiente;
 };
 
 template <typename R> struct Nodo {
-	std::string ID;
+	string ID;
 	subNodo<R> *sublista;
 	Nodo<R> *siguiente;
 };
 
 template <class T> class AgenciaMatrimonial {
 	Nodo<T> *cabeza;
-	Nodo<T> *crear_nodo(std::string id);
-	subNodo<T> *crear_subnodo(std::string id);
-	Nodo<T> inline *buscar_nodo(std::string id);
-	subNodo<T> inline *buscar_subnodo(std::string id, Nodo<T> *nodo);
+	Nodo<T> *crear_nodo(string id);
+	subNodo<T> *crear_subnodo(string id);
+	Nodo<T> inline *buscar_nodo(string id);
+	subNodo<T> inline *buscar_subnodo(string id, Nodo<T> *nodo);
 public:
 	AgenciaMatrimonial();
 	~AgenciaMatrimonial();
@@ -68,7 +69,7 @@ public:
 	void insertarPorComplexion(T *aff);
 	void insertarPorEstatura(T *aff);
 	int calcularEdad(T *aff);
-	T *buscarRegistro(std::string idLista, std::string idSublista);
+	T *buscarRegistro(string idLista, string idSublista);
 	//TODO otros metodos adicionales
 };
 

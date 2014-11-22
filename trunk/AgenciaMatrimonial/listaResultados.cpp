@@ -2,7 +2,8 @@
  * listaResultados.cpp
  *
  *  Created on: 18/11/2014
- *      Author: Juanpa y Yami
+ *      Author: Juan pablo Moreno Rico - 20111020059
+ *      Author: Diana Cristhina Pérez Pérez - 20111020069
  */
 
 #include <stddef.h>

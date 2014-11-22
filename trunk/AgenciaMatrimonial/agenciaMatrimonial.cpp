@@ -12,7 +12,7 @@
 /**
  * Crea un nodo cabeza de lista
  */
-template <class T> Nodo<T>* AgenciaMatrimonial<T>::crear_nodo(std::string id) {
+template <class T> Nodo<T>* AgenciaMatrimonial<T>::crear_nodo(string id) {
 	Nodo<T> *nodo = new Nodo<T>;
 	nodo->ID = id;
 	nodo->sublista = NULL;
@@ -23,7 +23,7 @@ template <class T> Nodo<T>* AgenciaMatrimonial<T>::crear_nodo(std::string id) {
 /**
  * crea un subnodo cabeza de sublista
  */
-template <class T> subNodo<T>* AgenciaMatrimonial<T>::crear_subnodo(std::string id) {
+template <class T> subNodo<T>* AgenciaMatrimonial<T>::crear_subnodo(string id) {
 	subNodo<T> *subnodo = new subNodo<T>;
 	subnodo->ID = id;
 	subnodo->registro = NULL;
@@ -33,7 +33,7 @@ template <class T> subNodo<T>* AgenciaMatrimonial<T>::crear_subnodo(std::string 
 /**
  * Busca el nodo con la cabeza de la lista de subnodos correspondiente al id dado
  */
-template <class T> Nodo<T> inline *AgenciaMatrimonial<T>::buscar_nodo(std::string id) {
+template <class T> Nodo<T> inline *AgenciaMatrimonial<T>::buscar_nodo(string id) {
 	Nodo<T> *aux = cabeza;
 	while (aux->ID != id) {
 		aux = aux->siguiente;
@@ -44,7 +44,7 @@ template <class T> Nodo<T> inline *AgenciaMatrimonial<T>::buscar_nodo(std::strin
 /**
  * Busca el subnodo cabeza de la lista correspondiente al id dado
  */
-template <class T> subNodo<T> inline *AgenciaMatrimonial<T>::buscar_subnodo(std::string id, Nodo<T> *nodo) {
+template <class T> subNodo<T> inline *AgenciaMatrimonial<T>::buscar_subnodo(string id, Nodo<T> *nodo) {
 	subNodo<T> *aux = nodo->sublista;
 	while (aux->ID != id) {
 		aux = aux->siguiente;
@@ -116,7 +116,7 @@ template <class T> void AgenciaMatrimonial<T>::insertarPorSexo(T *aff) {
 }
 
 /**
- * Inserta un afiliado por orden ascendente (menor a mayor ) de edad
+ * Inserta un afiliado por orden ascendente (menor a mayor) de edad
  * de forma ordenada en la lista que le corresponde
  */
 template <class T> void AgenciaMatrimonial<T>::insertarPorEdad(T *aff) {
@@ -269,7 +269,7 @@ template <class T> int AgenciaMatrimonial<T>::calcularEdad(T *aff) {
 /**
  * Retorna la cabeza de una sublista dado su id
  */
-template <class T> T *AgenciaMatrimonial<T>::buscarRegistro(std::string idLista, std::string idSublista) {
+template <class T> T *AgenciaMatrimonial<T>::buscarRegistro(string idLista, string idSublista) {
 	Nodo<T> lista;
 	subNodo<T> sublista;
 	T *registro;
