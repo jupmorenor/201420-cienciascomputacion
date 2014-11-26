@@ -12,14 +12,15 @@ using std::string;
 #ifndef AGENCIAMATRIMONIAL_H_
 #define AGENCIAMATRIMONIAL_H_
 
-const string LISTAS[] = {"SEXO", "EDAD", "NVACADEMICO", "COMPLEXION", "ESTATURA"};
-const string SUBLISTAS[][] = {SEXO, EDAD, NVACADEMICO, COMPLEXION, ESTATURA};
-const char SEXO[] = {"M", "F"};
+
+const string SEXO[] = {"M", "F"};
 const string EDAD[] = {"19A24", "25A35", "36A45", "46A60", "60MAS"};
 const string NVACADEMICO[] = {"BACHILLER", "TECNICO", "PROFESIONAL", "ESPECIALIZACION", "MAESTRIA", "DOCTORADO"};
 const string COMPLEXION[] = {"GRUESA", "NORMAL", "DELGADA"};
 const string ESTATURA[] = {"MENOS150", "151A160", "161A170", "171A180", "180MAS"};
-const int TAMS = {2, 5, 6, 3, 5};
+const string LISTAS[] = {"SEXO", "EDAD", "NVACADEMICO", "COMPLEXION", "ESTATURA"};
+const string *SUBLISTAS[5] = {SEXO, EDAD, NVACADEMICO, COMPLEXION, ESTATURA};
+const int TAMS[] = {2, 5, 6, 3, 5};
 const int CANT = 5;
 
 struct Fecha {
