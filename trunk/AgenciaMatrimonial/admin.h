@@ -6,26 +6,22 @@
  *      Author: Diana Cristhina Pérez Pérez - 20111020069
  */
 
-#include <fstream>
-#include <string>
-#include "agenciaMatrimonial.h"
-using std::string;
-using std::fstream;
+#include "usuario.h"
 
 #ifndef ADMIN_H_
 #define ADMIN_H_
 
-class Admin {
-	const char *nombreArchivo;
-	AgenciaMatrimonial<Afiliado> *agencia;
-	Afiliado *afiliado;
-	fstream archivoActivo;
+template <class T> class Administrador : public Usuario<T>{
+
 public:
-	Admin(string archivo);
-	~Admin();
+	Administrador();
+	Administrador(string archivo):Usuario(archivo) {
+		inicializar();
+	}
+	~Administrador();
 	void inicializar();
 	void guardarInformacion();
-	void registrarNuevoUsuario(Afiliado *nuevo);
+	void registrarNuevoUsuario(T *nuevo);
 	bool eliminarUsuarioRegistrado();
 	void mostrarPorEdadesSegunCiudad(string ciudad);
 	void mostrarPorHijosyCiudad(int hijos);

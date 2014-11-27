@@ -69,6 +69,11 @@ public:
 	void insertarPorNivelAcademico(T *aff);
 	void insertarPorComplexion(T *aff);
 	void insertarPorEstatura(T *aff);
+	bool eliminarPorSexo(string id);
+	bool eliminarPorEdad(string id);
+	bool eliminarPorNivelAcademico(string id);
+	bool eliminarPorComplexion(string id);
+	bool eliminarPorEstatura(string id);
 	int calcularEdad(T *aff);
 	T *buscarRegistro(string idLista, string idSublista);
 	//TODO otros metodos adicionales
