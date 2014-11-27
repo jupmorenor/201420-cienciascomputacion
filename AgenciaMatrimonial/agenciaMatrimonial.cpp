@@ -267,6 +267,29 @@ template <class T> int AgenciaMatrimonial<T>::calcularEdad(T *aff) {
 }
 
 /**
+ * Elimina un afiliado de la lista a partir de un identificador
+ */
+template <class T> bool AgenciaMatrimonial<T>::eliminarPorSexo(string id) {
+	T *borrable = buscarRegistro(LISTAS[0], SEXO[0]);
+}
+
+template <class T> bool AgenciaMatrimonial<T>::eliminarPorEdad(string id) {
+
+}
+
+template <class T> bool AgenciaMatrimonial<T>::eliminarPorNivelAcademico(string id) {
+
+}
+
+template <class T> bool AgenciaMatrimonial<T>::eliminarPorComplexion(string id) {
+
+}
+
+template <class T> bool AgenciaMatrimonial<T>::eliminarPorEstatura(string id) {
+
+}
+
+/**
  * Retorna la cabeza de una sublista dado su id
  */
 template <class T> T *AgenciaMatrimonial<T>::buscarRegistro(string idLista, string idSublista) {

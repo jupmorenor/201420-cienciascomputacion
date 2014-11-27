@@ -9,26 +9,20 @@
 #include <sstream>
 #include "admin.h"
 
-Admin::Admin(string archivo) {
-	nombreArchivo = archivo.c_str();
-	agencia = new AgenciaMatrimonial<Afiliado>();
-	inicializar();
-}
-
-Admin::~Admin() {
+template <class T> Administrador<T>::~Administrador() {
 	guardarInformacion();
 	delete afiliado;
 	delete agencia;
 }
 
-void Admin::inicializar() {
+template <class T> void Administrador<T>::inicializar() {
 	std::stringstream stream;
 	string registro;
-	string separador = ",";
+	string separador = ";";
 	size_t pos, sig;
 	archivoActivo.open(nombreArchivo);
 	while(archivoActivo.good()){
-		afiliado = new Afiliado;
+		afiliado = new T;
 		archivoActivo >> registro;
 		sig = -1;
 		pos = sig + 1;
@@ -91,7 +85,7 @@ void Admin::inicializar() {
 	archivoActivo.close();
 }
 
-void Admin::guardarInformacion() {
+template <class T> void Administrador<T>::guardarInformacion() {
 	std::stringstream stream;
 	archivoActivo.open(nombreArchivo);
 	string registro = "";
@@ -99,21 +93,21 @@ void Admin::guardarInformacion() {
 	for (int i=0; i<TAMS[0]; i++) {
 		afiliado = agencia->buscarRegistro(LISTAS[0], SEXO[i]);
 		do {
-			registro.append(afiliado->nombre + ",");
-			registro.append(afiliado->email + ",");
-			registro.append(afiliado->ciudad + ",");
-			registro.append(afiliado->ojos + ",");
-			registro.append(afiliado->complexion + ",");
-			registro.append(afiliado->hobbies[0] + ",");
-			registro.append(afiliado->hobbies[1] + ",");
-			registro.append(afiliado->nivelAcademico + ",");
-			registro.append(afiliado->actividadLaboral + ",");
-			stream << afiliado->nacimiento.dd << ",";
-			stream << afiliado->nacimiento.mm << ",";
-			stream << afiliado->nacimiento.aa << ",";
-			stream << afiliado->sexo << ",";
-			stream << afiliado->estatura << ",";
-			stream << afiliado->hijos;
+			registro.append(afiliado->nombre + ";");
+			registro.append(afiliado->email + ";");
+			registro.append(afiliado->ciudad + ",;");
+			registro.append(afiliado->ojos + ";");
+			registro.append(afiliado->complexion + ";");
+			registro.append(afiliado->hobbies[0] + ";");
+			registro.append(afiliado->hobbies[1] + ";");
+			registro.append(afiliado->nivelAcademico + ";");
+			registro.append(afiliado->actividadLaboral + ";");
+			stream << afiliado->nacimiento.dd << ";";
+			stream << afiliado->nacimiento.mm << ";";
+			stream << afiliado->nacimiento.aa << ";";
+			stream << afiliado->sexo << ";";
+			stream << afiliado->estatura << ";";
+			stream << afiliado->hijos  << "\n";
 			registro.append(stream.str());
 			archivoActivo << registro;
 			afiliado = afiliado->sigPorSexo;
@@ -122,7 +116,7 @@ void Admin::guardarInformacion() {
 	archivoActivo.close();
 }
 
-void Admin::registrarNuevoUsuario(Afiliado *nuevo) {
+template <class T> void Administrador<T>::registrarNuevoUsuario(T *nuevo) {
 	agencia->insertarPorSexo(nuevo);
 	agencia->insertarPorEdad(nuevo);
 	agencia->insertarPorNivelAcademico(nuevo);
@@ -130,17 +124,19 @@ void Admin::registrarNuevoUsuario(Afiliado *nuevo) {
 	agencia->insertarPorEstatura(nuevo);
 }
 
-bool Admin::eliminarUsuarioRegistrado() {
+template <class T> bool Administrador<T>::eliminarUsuarioRegistrado() {
 }
 
-void Admin::mostrarPorEdadesSegunCiudad(string ciudad) {
+template <class T> void Administrador<T>::mostrarPorEdadesSegunCiudad(string ciudad) {
 }
 
-void Admin::mostrarPorHijosyCiudad(int hijos) {
+template <class T> void Administrador<T>::mostrarPorHijosyCiudad(int hijos) {
 }
 
-void Admin::mostrarPorSexoyEdad(char sexo, int edad) {
+template <class T> void Administrador<T>::mostrarPorSexoyEdad(char sexo, int edad) {
 }
 
-void Admin::mostrarTodosPorCiudad(string ciudad) {
+template <class T> void Administrador<T>::mostrarTodosPorCiudad(string ciudad) {
 }
+
+template <class T> void Administrador<T>::imprimir();
