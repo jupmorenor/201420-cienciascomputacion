@@ -14,7 +14,7 @@
 template <class T> class Administrador : public Usuario<T>{
 
 public:
-	Administrador();
+	Administrador():Usuario(){};
 	Administrador(string archivo):Usuario(archivo) {
 		inicializar();
 	}
@@ -22,11 +22,11 @@ public:
 	void inicializar();
 	void guardarInformacion();
 	void registrarNuevoUsuario(T *nuevo);
-	bool eliminarUsuarioRegistrado();
+	bool eliminarUsuarioRegistrado(string id);
 	void mostrarPorEdadesSegunCiudad(string ciudad);
 	void mostrarPorHijosyCiudad(int hijos);
 	void mostrarPorSexoyEdad(char sexo, int edad);
-	void mostrarTodosPorCiudad(string ciudad);
+	void mostrarPorSexoyCiudad(string ciudad, char sexo);
 };
 
 #endif /* ADMIN_H_ */

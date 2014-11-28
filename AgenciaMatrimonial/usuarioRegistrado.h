@@ -13,9 +13,11 @@ using std::string;
 #define USUARIOREGISTRADO_H_
 
 template <class T> class UsuarioRegistrado : public Usuario<T> {
-
+	string sexoUsuario;
 public:
-	UsuarioRegistrado();
+	UsuarioRegistrado(string sexo):Usuario(){
+		sexoUsuario = sexo;
+	};
 	~UsuarioRegistrado();
 	void mostrarPorOjosyRangoEstatura(string ojos, string estatura);
 	void mostrarPorEdadyHobbies(int edad, string hobbie1, string hobbie2);

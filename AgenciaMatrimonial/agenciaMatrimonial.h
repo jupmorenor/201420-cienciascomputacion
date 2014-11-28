@@ -12,7 +12,6 @@ using std::string;
 #ifndef AGENCIAMATRIMONIAL_H_
 #define AGENCIAMATRIMONIAL_H_
 
-
 const string SEXO[] = {"M", "F"};
 const string EDAD[] = {"19A24", "25A35", "36A45", "46A60", "60MAS"};
 const string NVACADEMICO[] = {"BACHILLER", "TECNICO", "PROFESIONAL", "ESPECIALIZACION", "MAESTRIA", "DOCTORADO"};
@@ -69,14 +68,9 @@ public:
 	void insertarPorNivelAcademico(T *aff);
 	void insertarPorComplexion(T *aff);
 	void insertarPorEstatura(T *aff);
-	bool eliminarPorSexo(string id);
-	bool eliminarPorEdad(string id);
-	bool eliminarPorNivelAcademico(string id);
-	bool eliminarPorComplexion(string id);
-	bool eliminarPorEstatura(string id);
+	bool eliminarAfiliado(T *aff);
 	int calcularEdad(T *aff);
-	T *buscarRegistro(string idLista, string idSublista);
-	//TODO otros metodos adicionales
+	T inline *buscarRegistro(string idLista, string idSublista);
 };
 
 #endif /* AGENCIAMATRIMONIAL_H_ */

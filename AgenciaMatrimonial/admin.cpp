@@ -8,13 +8,17 @@
 
 #include <sstream>
 #include "admin.h"
+#include "listaResultados.h"
 
 template <class T> Administrador<T>::~Administrador() {
 	guardarInformacion();
-	delete afiliado;
 	delete agencia;
 }
 
+/**
+ * Abre el archivo de texto y con la informacion encontrada carga la multilista.
+ * Si el archivo no existe, la aplicacion inicia vacia.
+ */
 template <class T> void Administrador<T>::inicializar() {
 	std::stringstream stream;
 	string registro;
@@ -85,6 +89,10 @@ template <class T> void Administrador<T>::inicializar() {
 	archivoActivo.close();
 }
 
+/**
+ * Abre el archivo de texto y guarda la informacion conteida en la multilista.
+ * Si el archivo no existe, lo crea.
+ */
 template <class T> void Administrador<T>::guardarInformacion() {
 	std::stringstream stream;
 	archivoActivo.open(nombreArchivo);
@@ -116,6 +124,9 @@ template <class T> void Administrador<T>::guardarInformacion() {
 	archivoActivo.close();
 }
 
+/**
+ * Dado un afiliado, lo inserta en cada una de las listas.
+ */
 template <class T> void Administrador<T>::registrarNuevoUsuario(T *nuevo) {
 	agencia->insertarPorSexo(nuevo);
 	agencia->insertarPorEdad(nuevo);
@@ -124,19 +135,95 @@ template <class T> void Administrador<T>::registrarNuevoUsuario(T *nuevo) {
 	agencia->insertarPorEstatura(nuevo);
 }
 
-template <class T> bool Administrador<T>::eliminarUsuarioRegistrado() {
+/**
+ * Elimina un afiliado de cada una de las listas buscandolo por el correo.
+ */
+template <class T> bool Administrador<T>::eliminarUsuarioRegistrado(string id) {
+	for (int i=0; i<TAMS[0]; i++) {
+		afiliado = agencia->buscarRegistro(LISTAS[0], SEXO[i]);
+		while(afiliado!=NULL) {
+			if (afiliado->email == id) {
+				break;
+			}
+			afiliado = afiliado->sigPorSexo;
+		}
+		if (afiliado->email == id) {
+			break;
+		}
+	}
+	if (afiliado==NULL) {
+		return false;
+	} else if (agencia->eliminarAfiliado(afiliado)){
+		delete afiliado;
+	}
+	return true;
 }
 
+/**
+ * 1.
+ */
 template <class T> void Administrador<T>::mostrarPorEdadesSegunCiudad(string ciudad) {
 }
 
+/**
+ * 2. Imprime un listado de quienes tienen un numero de hijos dado
+ *    agrupandolos por ciudad
+ */
 template <class T> void Administrador<T>::mostrarPorHijosyCiudad(int hijos) {
+	Lista<T> *resultados = new Lista<T>();
+	nodoLista<T> *nodo, *aux;
+	string ciudad;
+	//Inserta en una lista los registros con la cantidad de hijos dada
+	for (int i=0; i<TAMS[0]; i++) {
+		afiliado = agencia->buscarRegistro(LISTAS[0], SEXO[i]);
+		while (afiliado!=NULL) {
+			if (afiliado->hijos == hijos) {
+				resultados->insertarRegistro(afiliado);
+			}
+			afiliado = afiliado->sigPorSexo;
+		}
+	}
+	//Imprime de la lista de resultados segun la ciudad
+	while (!resultados->listaVacia()) {
+		nodo = resultados->retornarPrimero();
+		ciudad = nodo->registro->ciudad;
+		std::cout << ciudad << std::endl;
+		while(nodo!=NULL) {
+			if (nodo->registro->ciudad == ciudad) {
+				imprimir(nodo->registro);
+				aux = nodo;
+				nodo = nodo->siguiente;
+				resultados->eliminarRegistro(aux->registro);
+			} else {
+				nodo = nodo->siguiente;
+			}
+		}
+	}
+	delete lista;
 }
 
+/**
+ * 3.
+ */
 template <class T> void Administrador<T>::mostrarPorSexoyEdad(char sexo, int edad) {
 }
 
-template <class T> void Administrador<T>::mostrarTodosPorCiudad(string ciudad) {
+/**
+ * 4. Imprime un listado de los nombres de todos los afiliados de un sexo dado que residen en una ciudad dada.
+ */
+template <class T> void Administrador<T>::mostrarPorSexoyCiudad(string ciudad, char sexo) {
+	afiliado = agencia->buscar_registro(LISTAS[0], sexo);
+	while(afiliado!=NULL) {
+		if (afiliado->ciudad == ciudad) {
+			imprimir(afiliado);
+		}
+		afiliado = afiliado->sigPorSexo;
+	}
 }
 
-template <class T> void Administrador<T>::imprimir();
+/**
+ * Imprime el nombre de un afiliado dado
+ */
+template <class T> void Administrador<T>::imprimir(T *aff) {
+	std::cout << aff->nombre << std::endl;
+}

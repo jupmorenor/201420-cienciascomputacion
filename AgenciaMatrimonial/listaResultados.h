@@ -18,12 +18,13 @@ template <class T> class Lista {
 	nodoLista<T> *cabeza;
 	int tam;
 	nodoLista<T> *crear_nodo(T *reg);
-	bool listaVacia();
 public:
 	Lista();
 	~Lista();
+	bool listaVacia();
 	void insertarRegistro(T *reg);
-	T *retornatPrimero();
+	void eliminarRegistro(T *reg);
+	nodoLista<T> *retornarPrimero();
 };
 
 #endif /* LISTARESULTADOS_H_ */

@@ -8,12 +8,6 @@
 
 #include "usuarioRegistrado.h"
 
-template <class T> UsuarioRegistrado<T>::UsuarioRegistrado() {
-}
-
-template <class T> UsuarioRegistrado<T>::~UsuarioRegistrado() {
-}
-
 template <class T> void UsuarioRegistrado<T>::mostrarPorOjosyRangoEstatura(string ojos, string estatura) {
 }
 
@@ -30,8 +24,10 @@ template <class T> void UsuarioRegistrado<T>::mostrarPorCiudadNumeroHijos(string
 }
 
 template <class T> void UsuarioRegistrado<T>::mostrarCombinado(string ojos, string estatura, bool hijos, string complexion) {
+
 }
 
-template <class T> void UsuarioRegistrado<T>::imprimir() {
-
+template <class T> void UsuarioRegistrado<T>::imprimir(T *aff) {
+	std::cout << aff->nombre << "    " << aff->email << "    " << aff->ciudad << "    "
+			  << aff->nivelAcademico << "    " << aff->actividadLaboral << std::endl;
 }

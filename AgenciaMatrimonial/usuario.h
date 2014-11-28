@@ -15,18 +15,18 @@
 template <class T> class Usuario {
 protected:
 	static AgenciaMatrimonial<T> *agencia;
-	static char *nombreArchivo;
+	char *nombreArchivo;
 	T *afiliado;
 	std::fstream archivoActivo;
 public:
 	Usuario();
 	Usuario(std::string archivo) {
 		nombreArchivo = archivo.c_str();
-		agencia = new AgenciaMatrimonial<T>();//FIXME: esta inicializacion va en el main
+		agencia = new AgenciaMatrimonial<T>();//TODO: debe inicializarse en el main
 		afiliado = NULL;
 	}
 	virtual ~Usuario();
-	virtual void imprimir();
+	virtual void imprimir(T *aff);
 };
 
 #endif /* USUARIO_H_ */

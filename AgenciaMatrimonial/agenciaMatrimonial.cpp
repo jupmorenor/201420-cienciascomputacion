@@ -267,32 +267,78 @@ template <class T> int AgenciaMatrimonial<T>::calcularEdad(T *aff) {
 }
 
 /**
- * Elimina un afiliado de la lista a partir de un identificador
+ * Elimina a un afiliado de todas las listas
  */
-template <class T> bool AgenciaMatrimonial<T>::eliminarPorSexo(string id) {
-	T *borrable = buscarRegistro(LISTAS[0], SEXO[0]);
-}
-
-template <class T> bool AgenciaMatrimonial<T>::eliminarPorEdad(string id) {
-
-}
-
-template <class T> bool AgenciaMatrimonial<T>::eliminarPorNivelAcademico(string id) {
-
-}
-
-template <class T> bool AgenciaMatrimonial<T>::eliminarPorComplexion(string id) {
-
-}
-
-template <class T> bool AgenciaMatrimonial<T>::eliminarPorEstatura(string id) {
-
+template <class T> bool AgenciaMatrimonial<T>::eliminarAfiliado(T *aff) {
+	T *anterior;
+	bool encontrado = false;
+	int i, j;
+	for (i=0; i<CANT; i++) {
+		for (j=0; j<TAMS[i]; j++) {
+			anterior = buscarRegistro(LISTAS[i], SUBLISTAS[i][j]);
+			encontrado = false;
+			while (anterior != NULL) {
+				switch (i) {
+				case 0:
+					if (anterior->sigPorSexo == aff) {
+						anterior->sigPorSexo = aff->sigPorSexo;
+						encontrado = true;
+					} else {
+						anterior = anterior->sigPorSexo;
+					}
+					break;
+				case 1:
+					if (anterior->sigPorEdad == aff) {
+						anterior->sigPorEdad = aff->sigPorEdad;
+						encontrado = true;
+					} else {
+						anterior = anterior->sigPorEdad;
+					}
+					break;
+				case 2:
+					if (anterior->sigPorNivelAcademico == aff) {
+						anterior->sigPorNivelAcademico = aff->sigPorNivelAcademico;
+						encontrado = true;
+					} else {
+						anterior = anterior->sigPorNivelAcademico;
+					}
+					break;
+				case 3:
+					if (anterior->sigPorComplexion == aff) {
+						anterior->sigPorComplexion = aff->sigPorComplexion;
+						encontrado = true;
+					} else {
+						anterior = anterior->sigPorComplexion;
+					}
+					break;
+				case 4:
+					if (anterior->sigPorEstatura == aff) {
+						anterior->sigPorEstatura = aff->sigPorEstatura;
+						encontrado = true;
+					} else {
+						anterior = anterior->sigPorEstatura;
+					}
+					break;
+				}
+				if (encontrado) {
+					break;
+				}
+			}
+			if (encontrado) {
+				break;
+			}
+		}
+	}
+	if(!encontrado) {
+		return false;
+	}
+	return true;
 }
 
 /**
  * Retorna la cabeza de una sublista dado su id
  */
-template <class T> T *AgenciaMatrimonial<T>::buscarRegistro(string idLista, string idSublista) {
+template <class T> T inline *AgenciaMatrimonial<T>::buscarRegistro(string idLista, string idSublista) {
 	Nodo<T> lista;
 	subNodo<T> sublista;
 	T *registro;
