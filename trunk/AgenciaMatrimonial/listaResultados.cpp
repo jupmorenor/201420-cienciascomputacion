@@ -48,9 +48,24 @@ template <class T> void Lista<T>::insertarRegistro(T *reg) {
 	tam++;
 }
 
-template <class T> T *Lista<T>::retornatPrimero() {
+template <class T> void Lista<T>::eliminarRegistro(T *reg) {
+	nodoLista<T> *aux = cabeza, *anterior;
+	while (aux->registro != reg) {
+		anterior = aux;
+		aux = aux->siguiente;
+	}
+	if (aux == cabeza) {
+		cabeza = aux->siguiente;
+	} else {
+		anterior->siguiente = aux->siguiente;
+	}
+	tam--;
+	delete aux;
+}
+
+template <class T> nodoLista<T> *Lista<T>::retornarPrimero() {
 	if (!listaVacia()) {
-		return cabeza->registro;
+		return cabeza;
 	}
 	return NULL;
 }
