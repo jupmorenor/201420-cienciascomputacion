@@ -20,7 +20,7 @@ public:
 	};
 	~UsuarioRegistrado();
 	void mostrarPorOjosyRangoEstatura(string ojos, string estatura);
-	void mostrarPorEdadyHobbies(int edad, string hobbie1, string hobbie2);
+	void mostrarPorEdadyHobbies(string rangoEdad, string hobbie1, string hobbie2);
 	void mostrarPorComplexionyNivelAcademico(string complexion, string nvAcademico);
 	void mostrarPorActividadLaborarNivelAcademico(string aLaboral, string nvAcademico);
 	void mostrarPorCiudadNumeroHijos(string ciudad, int hijos);
