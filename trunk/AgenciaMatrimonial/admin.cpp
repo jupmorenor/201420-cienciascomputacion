@@ -160,13 +160,28 @@ template <class T> bool Administrador<T>::eliminarUsuarioRegistrado(string id) {
 }
 
 /**
- * 1.
+ * 1. Numero total de personas que viven en una ciudad dada clasificandolos por rango de edad
  */
 template <class T> void Administrador<T>::mostrarPorEdadesSegunCiudad(string ciudad) {
+	int i, cantidad;
+	for (i=0; i<TAMS[1]; i++) {
+		std::cout << std::endl;
+		cantidad = 0;
+		afiliado = agencia->buscarRegistro(LISTAS[1], EDAD[i]);
+		while (afiliado!=NULL) {
+			if (afiliado->ciudad == ciudad) {
+				cantidad++;
+				imprimir(afiliado);
+			}
+			afiliado = afiliado->sigPorEdad;
+		}
+		std::cout << cantidad << " personas que viven en "
+				<< ciudad << " en el rango " << EDAD[i] << std::endl;
+	}
 }
 
 /**
- * 2. Imprime un listado de quienes tienen un numero de hijos dado
+ * 2. Llistado de los nombres de aquellos que tienen un numero de hijos dado
  *    agrupandolos por ciudad
  */
 template <class T> void Administrador<T>::mostrarPorHijosyCiudad(int hijos) {
@@ -203,13 +218,38 @@ template <class T> void Administrador<T>::mostrarPorHijosyCiudad(int hijos) {
 }
 
 /**
- * 3.
+ * 3. Nombre de las personas que pertenecen al sexo dado y tienen edad mayor o igual
+ *    a la edad dada
  */
 template <class T> void Administrador<T>::mostrarPorSexoyEdad(char sexo, int edad) {
+	int i;
+	if (edad>=19 && edad<=24) {
+		i=0;
+	} else if (edad >= 25 && edad <= 35){
+		i=1;
+	} else if (edad >= 36 && edad <= 45){
+		i=2;
+	} else if (edad >= 46 && edad <= 60) {
+		i=3;
+	} else if (edad > 60) {
+		i=4;
+	}
+	for(; i<TAMS[1]; i++) {
+		afiliado = agencia->buscarRegistro(LISTAS[1], EDAD[i]);
+		while (afiliado!=NULL) {
+			if (afiliado->sexo == sexo) {
+				if (agencia->calcularEdad(afiliado)>=edad) {
+					imprimir(afiliado);
+				}
+			}
+			afiliado = afiliado->sigPorEdad;
+		}
+	}
 }
 
 /**
- * 4. Imprime un listado de los nombres de todos los afiliados de un sexo dado que residen en una ciudad dada.
+ * 4. Imprime un listado de los nombres de todos los afiliados de un sexo dado
+ *    (hombres o mujeres) que residen en una ciudad dada.
  */
 template <class T> void Administrador<T>::mostrarPorSexoyCiudad(string ciudad, char sexo) {
 	afiliado = agencia->buscar_registro(LISTAS[0], sexo);
