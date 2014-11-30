@@ -27,10 +27,7 @@ public:
 	void mostrarPorActividadLaborarNivelAcademico(string aLaboral, string nvAcademico);
 	void mostrarPorCiudadNumeroHijos(string ciudad, int hijos);
 	void mostrarCombinado(string ojos, string estatura, bool hijos, string complexion);
-	void imprimir(T *aff) {
-		std::cout << aff->nombre << "    " << aff->email << "    " << aff->ciudad << "    "
-				  << aff->nivelAcademico << "    " << aff->actividadLaboral << std::endl;
-	}
+	void imprimir(T *aff);
 };
 
 #endif /* USUARIOREGISTRADO_H_ */
