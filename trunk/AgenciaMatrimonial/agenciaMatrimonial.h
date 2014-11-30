@@ -18,7 +18,7 @@ const string NVACADEMICO[] = {"BACHILLER", "TECNICO", "PROFESIONAL", "ESPECIALIZ
 const string COMPLEXION[] = {"GRUESA", "NORMAL", "DELGADA"};
 const string ESTATURA[] = {"MENOS150", "151A160", "161A170", "171A180", "180MAS"};
 const string LISTAS[] = {"SEXO", "EDAD", "NVACADEMICO", "COMPLEXION", "ESTATURA"};
-const string *SUBLISTAS[5] = {SEXO, EDAD, NVACADEMICO, COMPLEXION, ESTATURA};
+static const string *SUBLISTAS[5] = {SEXO, EDAD, NVACADEMICO, COMPLEXION, ESTATURA};
 const int TAMS[] = {2, 5, 6, 3, 5};
 const int CANT = 5;
 

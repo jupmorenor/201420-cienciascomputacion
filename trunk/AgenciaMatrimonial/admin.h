@@ -6,16 +6,17 @@
  *      Author: Diana Cristhina Pérez Pérez - 20111020069
  */
 
-#include "usuario.h"
-
 #ifndef ADMIN_H_
 #define ADMIN_H_
+
+#include <iostream>
+#include "usuario.h"
 
 template <class T> class Administrador : public Usuario<T>{
 
 public:
-	Administrador():Usuario(){};
-	Administrador(string archivo):Usuario(archivo) {
+	Administrador(){};
+	Administrador(string archivo):Usuario<T>(archivo) {
 		inicializar();
 	}
 	~Administrador();
@@ -27,6 +28,9 @@ public:
 	void mostrarPorHijosyCiudad(int hijos);
 	void mostrarPorSexoyEdad(char sexo, int edad);
 	void mostrarPorSexoyCiudad(string ciudad, char sexo);
+	void imprimir(T *aff){
+		std::cout << aff->nombre << std::endl;;
+	}
 };
 
 #endif /* ADMIN_H_ */
