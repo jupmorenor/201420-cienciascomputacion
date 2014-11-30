@@ -96,9 +96,11 @@ template <class T> void UsuarioRegistrado<T>::mostrarCombinado(string ojos, stri
 	}
 	delete resultados;
 }
-/*
+
 template <class T> void UsuarioRegistrado<T>::imprimir(T *aff) {
 	std::cout << aff->nombre << "    " << aff->email << "    " << aff->ciudad << "    "
 			  << aff->nivelAcademico << "    " << aff->actividadLaboral << std::endl;
 }
-*/
+
+template class UsuarioRegistrado<Afiliado>;
+

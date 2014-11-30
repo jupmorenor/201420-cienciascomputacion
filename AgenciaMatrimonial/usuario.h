@@ -15,17 +15,17 @@
 template <class T> class Usuario {
 protected:
 	static AgenciaMatrimonial<T> *agencia;
-	char *nombreArchivo;
+	string nombreArchivo;
 	T *afiliado;
 	std::fstream archivoActivo;
 public:
 	Usuario() {
-		nombreArchivo = NULL;
+		nombreArchivo = "";
 		afiliado = NULL;
 	}
 	Usuario(std::string archivo) {
-		nombreArchivo = new char[archivo.size()+1];
-		std::copy(archivo.begin(), archivo.end(), nombreArchivo);//strcpy(nombreArchivo, archivo.c_str());
+		nombreArchivo.append(archivo);//new char[archivo.size()+1];
+		//std::copy(archivo.begin(), archivo.end(), nombreArchivo);//strcpy(nombreArchivo, archivo.c_str());
 		agencia = new AgenciaMatrimonial<T>();
 		afiliado = NULL;
 	}
