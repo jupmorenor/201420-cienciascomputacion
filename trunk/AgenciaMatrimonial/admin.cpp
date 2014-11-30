@@ -102,7 +102,7 @@ template <class T> void Administrador<T>::guardarInformacion() {
 
 	for (int i=0; i<TAMS[0]; i++) {
 		this->afiliado = this->agencia->buscarRegistro(LISTAS[0], SEXO[i]);
-		do {
+		while (this->afiliado!=NULL) {
 			registro.append(this->afiliado->nombre + ";");
 			registro.append(this->afiliado->email + ";");
 			registro.append(this->afiliado->ciudad + ",;");
@@ -121,7 +121,7 @@ template <class T> void Administrador<T>::guardarInformacion() {
 			registro.append(stream.str());
 			this->archivoActivo << registro;
 			this->afiliado = this->afiliado->sigPorSexo;
-		}while (this->afiliado!=NULL);
+		}
 	}
 	this->archivoActivo.close();
 }

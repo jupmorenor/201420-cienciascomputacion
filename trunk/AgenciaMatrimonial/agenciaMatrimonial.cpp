@@ -64,7 +64,7 @@ template <class T> AgenciaMatrimonial<T>::AgenciaMatrimonial() {
 
 		aux1->sublista = crear_subnodo(SUBLISTAS[i-1][0]);
 		aux2 = aux1->sublista;
-		for (int j=1; j<TAMS[i]; j++) {
+		for (int j=1; j<TAMS[i]-1; j++) {
 			aux2->siguiente = crear_subnodo(SUBLISTAS[i-1][j]);
 			aux2 = aux2->siguiente;
 		}
@@ -82,6 +82,7 @@ template <class T> AgenciaMatrimonial<T>::~AgenciaMatrimonial() {
 		registro = buscarRegistro(LISTAS[0], SEXO[i]);
 		while (registro!=NULL) {
 			eliminarAfiliado(registro);
+			delete registro;
 		}
 	}
 }
