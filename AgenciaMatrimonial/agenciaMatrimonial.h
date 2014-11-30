@@ -35,7 +35,7 @@ struct Afiliado {
 	string hobbies[2];
 	string nivelAcademico;
 	string actividadLaboral;
-	Fecha *nacimiento = new Fecha;
+	Fecha *nacimiento;
 	string sexo;
 	int estatura;
 	int hijos;
