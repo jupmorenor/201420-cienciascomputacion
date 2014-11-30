@@ -6,13 +6,14 @@
  *      Author: Diana Cristhina Pérez Pérez - 20111020069
  */
 
+
 #include <sstream>
 #include "admin.h"
 #include "listaResultados.h"
 
 template <class T> Administrador<T>::~Administrador() {
 	guardarInformacion();
-	delete agencia;
+	delete this->agencia;
 }
 
 /**
@@ -24,69 +25,69 @@ template <class T> void Administrador<T>::inicializar() {
 	string registro;
 	string separador = ";";
 	size_t pos, sig;
-	archivoActivo.open(nombreArchivo);
-	while(archivoActivo.good()){
-		afiliado = new T;
-		archivoActivo >> registro;
+	this->archivoActivo.open(this->nombreArchivo);
+	while(this->archivoActivo.good()){
+		this->afiliado = new T;
+		this->archivoActivo >> registro;
 		sig = -1;
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
-		afiliado->nombre = registro.substr(pos, sig-pos);
+		this->afiliado->nombre = registro.substr(pos, sig-pos);
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
-		afiliado->email = registro.substr(pos, sig-pos);
+		this->afiliado->email = registro.substr(pos, sig-pos);
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
-		afiliado->ciudad = registro.substr(pos, sig-pos);
+		this->afiliado->ciudad = registro.substr(pos, sig-pos);
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
-		afiliado->ojos = registro.substr(pos, sig-pos);
+		this->afiliado->ojos = registro.substr(pos, sig-pos);
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
-		afiliado->complexion = registro.substr(pos, sig-pos);
+		this->afiliado->complexion = registro.substr(pos, sig-pos);
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
-		afiliado->hobbies[0] = registro.substr(pos, sig-pos);
+		this->afiliado->hobbies[0] = registro.substr(pos, sig-pos);
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
-		afiliado->hobbies[1] = registro.substr(pos, sig-pos);
+		this->afiliado->hobbies[1] = registro.substr(pos, sig-pos);
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
-		afiliado->nivelAcademico = registro.substr(pos, sig-pos);
+		this->afiliado->nivelAcademico = registro.substr(pos, sig-pos);
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
-		afiliado->actividadLaboral = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		stream.str(registro.substr(pos, sig-pos));
-		stream >> afiliado->nacimiento.dd;
+		this->afiliado->actividadLaboral = registro.substr(pos, sig-pos);
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
 		stream.str(registro.substr(pos, sig-pos));
-		stream >> afiliado->nacimiento.mm;
+		stream >> this->afiliado->nacimiento.dd;
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
 		stream.str(registro.substr(pos, sig-pos));
-		stream >> afiliado->nacimiento.aa;
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		afiliado->sexo = registro.substr(pos, sig-pos)[0];
+		stream >> this->afiliado->nacimiento.mm;
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
 		stream.str(registro.substr(pos, sig-pos));
-		stream >> afiliado->estatura;
+		stream >> this->afiliado->nacimiento.aa;
+		pos = sig + 1;
+		sig = registro.find_first_of(separador, pos);
+		this->afiliado->sexo = registro.substr(pos, sig-pos)[0];
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
 		stream.str(registro.substr(pos, sig-pos));
-		stream >> afiliado->hijos;
+		stream >> this->afiliado->estatura;
+		pos = sig + 1;
+		sig = registro.find_first_of(separador, pos);
+		stream.str(registro.substr(pos, sig-pos));
+		stream >> this->afiliado->hijos;
 
-		afiliado->sigPorSexo = afiliado->sigPorEdad = NULL;
-		afiliado->sigPorComplexion = afiliado->sigPorEstatura = NULL;
-		afiliado->sigPorNivelAcademico = NULL;
+		this->afiliado->sigPorSexo = this->afiliado->sigPorEdad = NULL;
+		this->afiliado->sigPorComplexion = this->afiliado->sigPorEstatura = NULL;
+		this->afiliado->sigPorNivelAcademico = NULL;
 
-		registrarNuevoUsuario(afiliado);
+		registrarNuevoUsuario(this->afiliado);
 	}
-	archivoActivo.close();
+	this->archivoActivo.close();
 }
 
 /**
@@ -95,44 +96,44 @@ template <class T> void Administrador<T>::inicializar() {
  */
 template <class T> void Administrador<T>::guardarInformacion() {
 	std::stringstream stream;
-	archivoActivo.open(nombreArchivo);
+	this->archivoActivo.open(this->nombreArchivo);
 	string registro = "";
 
 	for (int i=0; i<TAMS[0]; i++) {
-		afiliado = agencia->buscarRegistro(LISTAS[0], SEXO[i]);
+		this->afiliado = this->agencia->buscarRegistro(LISTAS[0], SEXO[i]);
 		do {
-			registro.append(afiliado->nombre + ";");
-			registro.append(afiliado->email + ";");
-			registro.append(afiliado->ciudad + ",;");
-			registro.append(afiliado->ojos + ";");
-			registro.append(afiliado->complexion + ";");
-			registro.append(afiliado->hobbies[0] + ";");
-			registro.append(afiliado->hobbies[1] + ";");
-			registro.append(afiliado->nivelAcademico + ";");
-			registro.append(afiliado->actividadLaboral + ";");
-			stream << afiliado->nacimiento.dd << ";";
-			stream << afiliado->nacimiento.mm << ";";
-			stream << afiliado->nacimiento.aa << ";";
-			stream << afiliado->sexo << ";";
-			stream << afiliado->estatura << ";";
-			stream << afiliado->hijos  << "\n";
+			registro.append(this->afiliado->nombre + ";");
+			registro.append(this->afiliado->email + ";");
+			registro.append(this->afiliado->ciudad + ",;");
+			registro.append(this->afiliado->ojos + ";");
+			registro.append(this->afiliado->complexion + ";");
+			registro.append(this->afiliado->hobbies[0] + ";");
+			registro.append(this->afiliado->hobbies[1] + ";");
+			registro.append(this->afiliado->nivelAcademico + ";");
+			registro.append(this->afiliado->actividadLaboral + ";");
+			stream << this->afiliado->nacimiento.dd << ";";
+			stream << this->afiliado->nacimiento.mm << ";";
+			stream << this->afiliado->nacimiento.aa << ";";
+			stream << this->afiliado->sexo << ";";
+			stream << this->afiliado->estatura << ";";
+			stream << this->afiliado->hijos  << "\n";
 			registro.append(stream.str());
-			archivoActivo << registro;
-			afiliado = afiliado->sigPorSexo;
-		}while (afiliado!=NULL);
+			this->archivoActivo << registro;
+			this->afiliado = this->afiliado->sigPorSexo;
+		}while (this->afiliado!=NULL);
 	}
-	archivoActivo.close();
+	this->archivoActivo.close();
 }
 
 /**
  * Dado un afiliado, lo inserta en cada una de las listas.
  */
 template <class T> void Administrador<T>::registrarNuevoUsuario(T *nuevo) {
-	agencia->insertarPorSexo(nuevo);
-	agencia->insertarPorEdad(nuevo);
-	agencia->insertarPorNivelAcademico(nuevo);
-	agencia->insertarPorComplexion(nuevo);
-	agencia->insertarPorEstatura(nuevo);
+	this->agencia->insertarPorSexo(nuevo);
+	this->agencia->insertarPorEdad(nuevo);
+	this->agencia->insertarPorNivelAcademico(nuevo);
+	this->agencia->insertarPorComplexion(nuevo);
+	this->agencia->insertarPorEstatura(nuevo);
 }
 
 /**
@@ -140,21 +141,21 @@ template <class T> void Administrador<T>::registrarNuevoUsuario(T *nuevo) {
  */
 template <class T> bool Administrador<T>::eliminarUsuarioRegistrado(string id) {
 	for (int i=0; i<TAMS[0]; i++) {
-		afiliado = agencia->buscarRegistro(LISTAS[0], SEXO[i]);
-		while(afiliado!=NULL) {
-			if (afiliado->email == id) {
+		this->afiliado = this->agencia->buscarRegistro(LISTAS[0], SEXO[i]);
+		while(this->afiliado!=NULL) {
+			if (this->afiliado->email == id) {
 				break;
 			}
-			afiliado = afiliado->sigPorSexo;
+			this->afiliado = this->afiliado->sigPorSexo;
 		}
-		if (afiliado->email == id) {
+		if (this->afiliado->email == id) {
 			break;
 		}
 	}
-	if (afiliado==NULL) {
+	if (this->afiliado==NULL) {
 		return false;
-	} else if (agencia->eliminarAfiliado(afiliado)){
-		delete afiliado;
+	} else if (this->agencia->eliminarAfiliado(this->afiliado)){
+		delete this->afiliado;
 	}
 	return true;
 }
@@ -167,13 +168,13 @@ template <class T> void Administrador<T>::mostrarPorEdadesSegunCiudad(string ciu
 	for (i=0; i<TAMS[1]; i++) {
 		std::cout << std::endl;
 		cantidad = 0;
-		afiliado = agencia->buscarRegistro(LISTAS[1], EDAD[i]);
-		while (afiliado!=NULL) {
-			if (afiliado->ciudad == ciudad) {
+		this->afiliado = this->agencia->buscarRegistro(LISTAS[1], EDAD[i]);
+		while (this->afiliado!=NULL) {
+			if (this->afiliado->ciudad == ciudad) {
 				cantidad++;
-				imprimir(afiliado);
+				imprimir(this->afiliado);
 			}
-			afiliado = afiliado->sigPorEdad;
+			this->afiliado = this->afiliado->sigPorEdad;
 		}
 		std::cout << cantidad << " personas que viven en "
 				<< ciudad << " en el rango " << EDAD[i] << std::endl;
@@ -190,12 +191,12 @@ template <class T> void Administrador<T>::mostrarPorHijosyCiudad(int hijos) {
 	string ciudad;
 	//Inserta en una lista los registros con la cantidad de hijos dada
 	for (int i=0; i<TAMS[0]; i++) {
-		afiliado = agencia->buscarRegistro(LISTAS[0], SEXO[i]);
-		while (afiliado!=NULL) {
-			if (afiliado->hijos == hijos) {
-				resultados->insertarRegistro(afiliado);
+		this->afiliado = this->agencia->buscarRegistro(LISTAS[0], SEXO[i]);
+		while (this->afiliado!=NULL) {
+			if (this->afiliado->hijos == hijos) {
+				resultados->insertarRegistro(this->afiliado);
 			}
-			afiliado = afiliado->sigPorSexo;
+			this->afiliado = this->afiliado->sigPorSexo;
 		}
 	}
 	//Imprime de la lista de resultados segun la ciudad
@@ -214,7 +215,7 @@ template <class T> void Administrador<T>::mostrarPorHijosyCiudad(int hijos) {
 			}
 		}
 	}
-	delete lista;
+	delete resultados;
 }
 
 /**
@@ -235,14 +236,14 @@ template <class T> void Administrador<T>::mostrarPorSexoyEdad(char sexo, int eda
 		i=4;
 	}
 	for(; i<TAMS[1]; i++) {
-		afiliado = agencia->buscarRegistro(LISTAS[1], EDAD[i]);
-		while (afiliado!=NULL) {
-			if (afiliado->sexo == sexo) {
-				if (agencia->calcularEdad(afiliado)>=edad) {
-					imprimir(afiliado);
+		this->afiliado = this->agencia->buscarRegistro(LISTAS[1], EDAD[i]);
+		while (this->afiliado!=NULL) {
+			if (this->afiliado->sexo == sexo) {
+				if (this->agencia->calcularEdad(this->afiliado)>=edad) {
+					imprimir(this->afiliado);
 				}
 			}
-			afiliado = afiliado->sigPorEdad;
+			this->afiliado = this->afiliado->sigPorEdad;
 		}
 	}
 }
@@ -252,18 +253,19 @@ template <class T> void Administrador<T>::mostrarPorSexoyEdad(char sexo, int eda
  *    (hombres o mujeres) que residen en una ciudad dada.
  */
 template <class T> void Administrador<T>::mostrarPorSexoyCiudad(string ciudad, char sexo) {
-	afiliado = agencia->buscar_registro(LISTAS[0], sexo);
-	while(afiliado!=NULL) {
-		if (afiliado->ciudad == ciudad) {
-			imprimir(afiliado);
+	this->afiliado = this->agencia->buscar_registro(LISTAS[0], sexo);
+	while(this->afiliado!=NULL) {
+		if (this->afiliado->ciudad == ciudad) {
+			imprimir(this->afiliado);
 		}
-		afiliado = afiliado->sigPorSexo;
+		this->afiliado = this->afiliado->sigPorSexo;
 	}
 }
 
 /**
  * Imprime el nombre de un afiliado dado
- */
+ *
 template <class T> void Administrador<T>::imprimir(T *aff) {
 	std::cout << aff->nombre << std::endl;
 }
+*/

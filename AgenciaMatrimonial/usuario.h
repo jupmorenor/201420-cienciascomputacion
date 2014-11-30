@@ -6,11 +6,11 @@
  *      Author: Diana Cristhina Pérez Pérez - 20111020069
  */
 
-#include <fstream>
-#include "agenciaMatrimonial.h"
-
 #ifndef USUARIO_H_
 #define USUARIO_H_
+
+#include <fstream>
+#include "agenciaMatrimonial.h"
 
 template <class T> class Usuario {
 protected:
@@ -19,14 +19,17 @@ protected:
 	T *afiliado;
 	std::fstream archivoActivo;
 public:
-	Usuario();
-	Usuario(std::string archivo) {
-		nombreArchivo = archivo.c_str();
-		agencia = new AgenciaMatrimonial<T>();//TODO: debe inicializarse en el main
+	Usuario() {
+		nombreArchivo = NULL;
 		afiliado = NULL;
 	}
-	virtual ~Usuario();
-	virtual void imprimir(T *aff);
+	Usuario(std::string archivo) {
+		nombreArchivo = archivo.c_str();
+		agencia = new AgenciaMatrimonial<T>();
+		afiliado = NULL;
+	}
+	virtual ~Usuario(){};
+	virtual void imprimir(T *aff) = 0;
 };
 
 #endif /* USUARIO_H_ */
