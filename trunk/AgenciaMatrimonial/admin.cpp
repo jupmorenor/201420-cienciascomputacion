@@ -13,7 +13,6 @@
 
 template <class T> Administrador<T>::~Administrador() {
 	guardarInformacion();
-	delete this->nombreArchivo;
 	delete this->agencia;
 }
 
@@ -23,70 +22,75 @@ template <class T> Administrador<T>::~Administrador() {
  */
 template <class T> void Administrador<T>::inicializar() {
 	std::stringstream stream;
-	string registro;
+	string registro = "";
 	string separador = ";";
 	size_t pos, sig;
-	this->archivoActivo.open(this->nombreArchivo);
+	this->archivoActivo.open(this->nombreArchivo, std::ios_base::in);
 	while(this->archivoActivo.good()){
 		this->afiliado = new T;
+		this->afiliado->nacimiento = new Fecha;
 		this->archivoActivo >> registro;
-		sig = -1;
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->nombre = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->email = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->ciudad = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->ojos = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->complexion = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->hobbies[0] = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->hobbies[1] = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->nivelAcademico = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->actividadLaboral = registro.substr(pos, sig-pos);
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		stream.str(registro.substr(pos, sig-pos));
-		stream >> this->afiliado->nacimiento->dd;
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		stream.str(registro.substr(pos, sig-pos));
-		stream >> this->afiliado->nacimiento->mm;
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		stream.str(registro.substr(pos, sig-pos));
-		stream >> this->afiliado->nacimiento->aa;
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		this->afiliado->sexo = registro.substr(pos, sig-pos)[0];
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		stream.str(registro.substr(pos, sig-pos));
-		stream >> this->afiliado->estatura;
-		pos = sig + 1;
-		sig = registro.find_first_of(separador, pos);
-		stream.str(registro.substr(pos, sig-pos));
-		stream >> this->afiliado->hijos;
+		if(!registro.empty()) {
+			sig = -1;
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->nombre = registro.substr(pos, sig-pos);
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->email = registro.substr(pos, sig-pos);
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->ciudad = registro.substr(pos, sig-pos);
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->ojos = registro.substr(pos, sig-pos);
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->complexion = registro.substr(pos, sig-pos);
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->hobbies[0] = registro.substr(pos, sig-pos);
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->hobbies[1] = registro.substr(pos, sig-pos);
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->nivelAcademico = registro.substr(pos, sig-pos);
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->actividadLaboral = registro.substr(pos, sig-pos);
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			stream.str(registro.substr(pos, sig-pos));
+			stream >> this->afiliado->nacimiento->dd;
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			stream.str(registro.substr(pos, sig-pos));
+			stream >> this->afiliado->nacimiento->mm;
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			stream.str(registro.substr(pos, sig-pos));
+			stream >> this->afiliado->nacimiento->aa;
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			this->afiliado->sexo = registro.substr(pos, sig-pos)[0];
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			stream.str(registro.substr(pos, sig-pos));
+			stream >> this->afiliado->estatura;
+			pos = sig + 1;
+			sig = registro.find_first_of(separador, pos);
+			stream.str(registro.substr(pos, sig-pos));
+			stream >> this->afiliado->hijos;
 
-		this->afiliado->sigPorSexo = this->afiliado->sigPorEdad = NULL;
-		this->afiliado->sigPorComplexion = this->afiliado->sigPorEstatura = NULL;
-		this->afiliado->sigPorNivelAcademico = NULL;
+			this->afiliado->sigPorSexo = this->afiliado->sigPorEdad = NULL;
+			this->afiliado->sigPorComplexion = this->afiliado->sigPorEstatura = NULL;
+			this->afiliado->sigPorNivelAcademico = NULL;
 
-		registrarNuevoUsuario(this->afiliado);
+			registrarNuevoUsuario(this->afiliado);
+			registro = "";
+			stream.str(registro);
+		}
 	}
 	this->archivoActivo.close();
 }
@@ -97,15 +101,16 @@ template <class T> void Administrador<T>::inicializar() {
  */
 template <class T> void Administrador<T>::guardarInformacion() {
 	std::stringstream stream;
-	this->archivoActivo.open(this->nombreArchivo);
-	string registro = "";
+	this->archivoActivo.open(this->nombreArchivo, std::ios_base::out);
+	string registro;
 
 	for (int i=0; i<TAMS[0]; i++) {
 		this->afiliado = this->agencia->buscarRegistro(LISTAS[0], SEXO[i]);
 		while (this->afiliado!=NULL) {
+			registro = "";
 			registro.append(this->afiliado->nombre + ";");
 			registro.append(this->afiliado->email + ";");
-			registro.append(this->afiliado->ciudad + ",;");
+			registro.append(this->afiliado->ciudad + ";");
 			registro.append(this->afiliado->ojos + ";");
 			registro.append(this->afiliado->complexion + ";");
 			registro.append(this->afiliado->hobbies[0] + ";");
@@ -121,6 +126,7 @@ template <class T> void Administrador<T>::guardarInformacion() {
 			registro.append(stream.str());
 			this->archivoActivo << registro;
 			this->afiliado = this->afiliado->sigPorSexo;
+			stream.str("");
 		}
 	}
 	this->archivoActivo.close();

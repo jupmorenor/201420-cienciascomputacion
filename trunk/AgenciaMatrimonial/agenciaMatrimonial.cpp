@@ -60,16 +60,18 @@ template <class T> AgenciaMatrimonial<T>::AgenciaMatrimonial() {
 	cabeza = crear_nodo(LISTAS[0]);
 	Nodo<T> *aux1 = cabeza;
 	subNodo<T> *aux2;
-	for (int i=1; i<CANT; i++) {
+	for (int i=0; i<CANT; i++) {
 
-		aux1->sublista = crear_subnodo(SUBLISTAS[i-1][0]);
+		aux1->sublista = crear_subnodo(SUBLISTAS[i][0]);
 		aux2 = aux1->sublista;
-		for (int j=1; j<TAMS[i]-1; j++) {
-			aux2->siguiente = crear_subnodo(SUBLISTAS[i-1][j]);
+		for (int j=1; j<TAMS[i]; j++) {
+			aux2->siguiente = crear_subnodo(SUBLISTAS[i][j]);
 			aux2 = aux2->siguiente;
 		}
-		aux1->siguiente = crear_nodo(LISTAS[i]);
-		aux1 = aux1->siguiente;
+		if (i+1 < CANT) {
+			aux1->siguiente = crear_nodo(LISTAS[i+1]);
+			aux1 = aux1->siguiente;
+		}
 	}
 }
 
@@ -77,14 +79,32 @@ template <class T> AgenciaMatrimonial<T>::AgenciaMatrimonial() {
  * Libera la memoria ocupada por la multilista
  */
 template <class T> AgenciaMatrimonial<T>::~AgenciaMatrimonial() {
+	Nodo<T> *lista;
+	subNodo<T> *sublista;
 	T *registro;
-	for(int i=0; i<TAMS[0]; i++) {
+	int i, j;
+	//borra los registros
+	for(i=0; i<TAMS[0]; i++) {
 		registro = buscarRegistro(LISTAS[0], SEXO[i]);
 		while (registro!=NULL) {
-			eliminarAfiliado(registro);
-			delete registro;
+			if (eliminarAfiliado(registro)) {
+				delete registro->nacimiento;
+				delete registro;
+				break;
+			}
 		}
 	}
+	for(i=0; i<CANT; i++) {
+		lista = buscar_nodo(LISTAS[i]);
+		for(j=0; j<TAMS[i]; j++) {
+			sublista = buscar_subnodo(SUBLISTAS[i][j], lista);
+			lista->sublista = sublista->siguiente;
+			delete sublista;
+		}
+		cabeza = lista->siguiente;
+		delete lista;
+	}
+
 }
 
 /**
@@ -286,6 +306,7 @@ template <class T> bool AgenciaMatrimonial<T>::eliminarAfiliado(T *aff) {
 				case 1:
 					if (anterior == aff) {
 						sublista->registro = aff->sigPorEdad;
+						encontrado = true;
 					} else if (anterior->sigPorEdad == aff) {
 						anterior->sigPorEdad = aff->sigPorEdad;
 						encontrado = true;
