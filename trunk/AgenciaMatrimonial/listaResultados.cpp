@@ -8,6 +8,7 @@
 
 #include <stddef.h>
 #include "listaResultados.h"
+#include "agenciaMatrimonial.h"
 
 template <class T> nodoLista<T> *Lista<T>::crear_nodo(T *reg) {
 	nodoLista<T> *nodo = new nodoLista<T>;
@@ -69,3 +70,5 @@ template <class T> nodoLista<T> *Lista<T>::retornarPrimero() {
 	}
 	return NULL;
 }
+
+template class Lista<Afiliado>;

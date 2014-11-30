@@ -35,8 +35,8 @@ struct Afiliado {
 	string hobbies[2];
 	string nivelAcademico;
 	string actividadLaboral;
-	Fecha nacimiento;
-	char sexo;
+	Fecha *nacimiento = new Fecha;
+	string sexo;
 	int estatura;
 	int hijos;
 	Afiliado *sigPorSexo, *sigPorEdad, *sigPorNivelAcademico, *sigPorComplexion, *sigPorEstatura;
@@ -70,7 +70,7 @@ public:
 	void insertarPorEstatura(T *aff);
 	bool eliminarAfiliado(T *aff);
 	int calcularEdad(T *aff);
-	T inline *buscarRegistro(string idLista, string idSublista);
+	T *buscarRegistro(string idLista, string idSublista);
 };
 
 #endif /* AGENCIAMATRIMONIAL_H_ */

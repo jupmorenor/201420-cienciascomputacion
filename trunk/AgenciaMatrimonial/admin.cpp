@@ -13,6 +13,7 @@
 
 template <class T> Administrador<T>::~Administrador() {
 	guardarInformacion();
+	delete this->nombreArchivo;
 	delete this->agencia;
 }
 
@@ -60,15 +61,15 @@ template <class T> void Administrador<T>::inicializar() {
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
 		stream.str(registro.substr(pos, sig-pos));
-		stream >> this->afiliado->nacimiento.dd;
+		stream >> this->afiliado->nacimiento->dd;
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
 		stream.str(registro.substr(pos, sig-pos));
-		stream >> this->afiliado->nacimiento.mm;
+		stream >> this->afiliado->nacimiento->mm;
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
 		stream.str(registro.substr(pos, sig-pos));
-		stream >> this->afiliado->nacimiento.aa;
+		stream >> this->afiliado->nacimiento->aa;
 		pos = sig + 1;
 		sig = registro.find_first_of(separador, pos);
 		this->afiliado->sexo = registro.substr(pos, sig-pos)[0];
@@ -111,9 +112,9 @@ template <class T> void Administrador<T>::guardarInformacion() {
 			registro.append(this->afiliado->hobbies[1] + ";");
 			registro.append(this->afiliado->nivelAcademico + ";");
 			registro.append(this->afiliado->actividadLaboral + ";");
-			stream << this->afiliado->nacimiento.dd << ";";
-			stream << this->afiliado->nacimiento.mm << ";";
-			stream << this->afiliado->nacimiento.aa << ";";
+			stream << this->afiliado->nacimiento->dd << ";";
+			stream << this->afiliado->nacimiento->mm << ";";
+			stream << this->afiliado->nacimiento->aa << ";";
 			stream << this->afiliado->sexo << ";";
 			stream << this->afiliado->estatura << ";";
 			stream << this->afiliado->hijos  << "\n";
@@ -222,7 +223,7 @@ template <class T> void Administrador<T>::mostrarPorHijosyCiudad(int hijos) {
  * 3. Nombre de las personas que pertenecen al sexo dado y tienen edad mayor o igual
  *    a la edad dada
  */
-template <class T> void Administrador<T>::mostrarPorSexoyEdad(char sexo, int edad) {
+template <class T> void Administrador<T>::mostrarPorSexoyEdad(string sexo, int edad) {
 	int i;
 	if (edad>=19 && edad<=24) {
 		i=0;
@@ -252,8 +253,8 @@ template <class T> void Administrador<T>::mostrarPorSexoyEdad(char sexo, int eda
  * 4. Imprime un listado de los nombres de todos los afiliados de un sexo dado
  *    (hombres o mujeres) que residen en una ciudad dada.
  */
-template <class T> void Administrador<T>::mostrarPorSexoyCiudad(string ciudad, char sexo) {
-	this->afiliado = this->agencia->buscar_registro(LISTAS[0], sexo);
+template <class T> void Administrador<T>::mostrarPorSexoyCiudad(string ciudad, string sexo) {
+	this->afiliado = this->agencia->buscarRegistro(LISTAS[0], sexo);
 	while(this->afiliado!=NULL) {
 		if (this->afiliado->ciudad == ciudad) {
 			imprimir(this->afiliado);
@@ -264,8 +265,10 @@ template <class T> void Administrador<T>::mostrarPorSexoyCiudad(string ciudad, c
 
 /**
  * Imprime el nombre de un afiliado dado
- *
+ */
 template <class T> void Administrador<T>::imprimir(T *aff) {
 	std::cout << aff->nombre << std::endl;
 }
-*/
+
+
+template class Administrador<Afiliado>;

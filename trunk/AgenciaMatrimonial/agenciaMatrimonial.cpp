@@ -28,6 +28,7 @@ template <class T> subNodo<T>* AgenciaMatrimonial<T>::crear_subnodo(string id) {
 	subnodo->ID = id;
 	subnodo->registro = NULL;
 	subnodo->siguiente = NULL;
+	return subnodo;
 }
 
 /**
@@ -76,25 +77,13 @@ template <class T> AgenciaMatrimonial<T>::AgenciaMatrimonial() {
  * Libera la memoria ocupada por la multilista
  */
 template <class T> AgenciaMatrimonial<T>::~AgenciaMatrimonial() {
-	Nodo<T> *lista;
-	subNodo<T> *sublista;
 	T *registro;
-	for (lista=cabeza->siguiente; lista!=NULL; lista=lista->siguiente) {
-		for (sublista=lista->sublista->siguiente; sublista!=NULL; sublista=sublista->siguiente) {
-			for(registro=sublista->registro->siguiente; registro!=NULL; registro=registro->siguiente) {
-				delete sublista;
-				sublista = registro;
-			}
-			delete registro;
-			delete lista;
-			lista = sublista;
+	for(int i=0; i<TAMS[0]; i++) {
+		registro = buscarRegistro(LISTAS[0], SEXO[i]);
+		while (registro!=NULL) {
+			eliminarAfiliado(registro);
 		}
-		delete sublista;
-		delete cabeza;
-		cabeza = lista;
 	}
-	delete lista;
-	delete cabeza;
 }
 
 /**
@@ -123,9 +112,8 @@ template <class T> void AgenciaMatrimonial<T>::insertarPorEdad(T *aff) {
 	Nodo<T> *lista = buscar_nodo(LISTAS[1]);
 	subNodo<T> *sublista;
 	T *registro;
-	int edad, edadAux, e;
+	int edad, edadAux;
 	edad = calcularEdad(aff);
-	e = 25;
 	if (edad >= 19 && edad <= 24) {
 		sublista = buscar_subnodo(EDAD[0], lista);
 	} else if (edad >= 25 && edad <= 35) {
@@ -246,21 +234,21 @@ template <class T> int AgenciaMatrimonial<T>::calcularEdad(T *aff) {
 	int edad;
 
 	/* calculo de la fecha actual */
-	struct tm fechaActual;
+	struct tm *fechaActual;
 	time_t fechaSistema;
 	time(&fechaSistema);
 	fechaActual = localtime(&fechaSistema);
 
 	/* calculo de la edad */
-	if (fechaActual.tm_mon+1 > aff->nacimiento->mm) {
-		edad = fechaActual.tm_year+1900 - aff->nacimiento->aa;
-	} else if (fechaActual.tm_mon+1 < aff->nacimiento->mm) {
-		edad = fechaActual.tm_year+1900 - aff->nacimiento->aa - 1;
+	if (fechaActual->tm_mon+1 > aff->nacimiento->mm) {
+		edad = fechaActual->tm_year+1900 - aff->nacimiento->aa;
+	} else if (fechaActual->tm_mon+1 < aff->nacimiento->mm) {
+		edad = fechaActual->tm_year+1900 - aff->nacimiento->aa - 1;
 	} else {
-		if (fechaActual.tm_mday >= aff->nacimiento->dd) {
-			edad = fechaActual.tm_year+1900 - aff->nacimiento->aa;
+		if (fechaActual->tm_mday >= aff->nacimiento->dd) {
+			edad = fechaActual->tm_year+1900 - aff->nacimiento->aa;
 		} else {
-			edad = fechaActual.tm_year+1900 - aff->nacimiento->aa - 1;
+			edad = fechaActual->tm_year+1900 - aff->nacimiento->aa - 1;
 		}
 	}
 	return edad;
@@ -270,17 +258,24 @@ template <class T> int AgenciaMatrimonial<T>::calcularEdad(T *aff) {
  * Elimina a un afiliado de todas las listas
  */
 template <class T> bool AgenciaMatrimonial<T>::eliminarAfiliado(T *aff) {
+	Nodo<T> *lista;
+	subNodo<T> *sublista;
 	T *anterior;
 	bool encontrado = false;
 	int i, j;
 	for (i=0; i<CANT; i++) {
+		lista = buscar_nodo(LISTAS[i]);
 		for (j=0; j<TAMS[i]; j++) {
-			anterior = buscarRegistro(LISTAS[i], SUBLISTAS[i][j]);
+			sublista = buscar_subnodo(SUBLISTAS[i][j], lista);
+			anterior = sublista->registro;
 			encontrado = false;
 			while (anterior != NULL) {
 				switch (i) {
 				case 0:
-					if (anterior->sigPorSexo == aff) {
+					if (anterior == aff) {
+						sublista->registro = aff->sigPorSexo;
+						encontrado = true;
+					} else if (anterior->sigPorSexo == aff) {
 						anterior->sigPorSexo = aff->sigPorSexo;
 						encontrado = true;
 					} else {
@@ -288,7 +283,9 @@ template <class T> bool AgenciaMatrimonial<T>::eliminarAfiliado(T *aff) {
 					}
 					break;
 				case 1:
-					if (anterior->sigPorEdad == aff) {
+					if (anterior == aff) {
+						sublista->registro = aff->sigPorEdad;
+					} else if (anterior->sigPorEdad == aff) {
 						anterior->sigPorEdad = aff->sigPorEdad;
 						encontrado = true;
 					} else {
@@ -296,7 +293,10 @@ template <class T> bool AgenciaMatrimonial<T>::eliminarAfiliado(T *aff) {
 					}
 					break;
 				case 2:
-					if (anterior->sigPorNivelAcademico == aff) {
+					if (anterior == aff) {
+						sublista->registro = aff->sigPorNivelAcademico;
+						encontrado = true;
+					} else if (anterior->sigPorNivelAcademico == aff) {
 						anterior->sigPorNivelAcademico = aff->sigPorNivelAcademico;
 						encontrado = true;
 					} else {
@@ -304,7 +304,10 @@ template <class T> bool AgenciaMatrimonial<T>::eliminarAfiliado(T *aff) {
 					}
 					break;
 				case 3:
-					if (anterior->sigPorComplexion == aff) {
+					if (anterior == aff) {
+						sublista->registro = aff->sigPorComplexion;
+						encontrado = true;
+					} else if (anterior->sigPorComplexion == aff) {
 						anterior->sigPorComplexion = aff->sigPorComplexion;
 						encontrado = true;
 					} else {
@@ -312,7 +315,10 @@ template <class T> bool AgenciaMatrimonial<T>::eliminarAfiliado(T *aff) {
 					}
 					break;
 				case 4:
-					if (anterior->sigPorEstatura == aff) {
+					if (anterior == aff) {
+						sublista->registro = aff->sigPorEstatura;
+						encontrado = true;
+					} else if (anterior->sigPorEstatura == aff) {
 						anterior->sigPorEstatura = aff->sigPorEstatura;
 						encontrado = true;
 					} else {
@@ -338,12 +344,14 @@ template <class T> bool AgenciaMatrimonial<T>::eliminarAfiliado(T *aff) {
 /**
  * Retorna la cabeza de una sublista dado su id
  */
-template <class T> T inline *AgenciaMatrimonial<T>::buscarRegistro(string idLista, string idSublista) {
-	Nodo<T> lista;
-	subNodo<T> sublista;
+template <class T> T *AgenciaMatrimonial<T>::buscarRegistro(string idLista, string idSublista) {
+	Nodo<T> *lista;
+	subNodo<T> *sublista;
 	T *registro;
 	lista = buscar_nodo(idLista);
 	sublista = buscar_subnodo(idSublista, lista);
 	registro = sublista->registro;
 	return registro;
 }
+
+template class AgenciaMatrimonial<Afiliado>;

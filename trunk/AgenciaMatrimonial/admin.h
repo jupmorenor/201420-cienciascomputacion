@@ -26,11 +26,9 @@ public:
 	bool eliminarUsuarioRegistrado(string id);
 	void mostrarPorEdadesSegunCiudad(string ciudad);
 	void mostrarPorHijosyCiudad(int hijos);
-	void mostrarPorSexoyEdad(char sexo, int edad);
-	void mostrarPorSexoyCiudad(string ciudad, char sexo);
-	void imprimir(T *aff){
-		std::cout << aff->nombre << std::endl;;
-	}
+	void mostrarPorSexoyEdad(string sexo, int edad);
+	void mostrarPorSexoyCiudad(string ciudad, string sexo);
+	void imprimir(T *aff);
 };
 
 #endif /* ADMIN_H_ */
