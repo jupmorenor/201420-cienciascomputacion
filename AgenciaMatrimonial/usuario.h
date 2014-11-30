@@ -24,7 +24,8 @@ public:
 		afiliado = NULL;
 	}
 	Usuario(std::string archivo) {
-		nombreArchivo = archivo.c_str();
+		nombreArchivo = new char[archivo.size()+1];
+		std::copy(archivo.begin(), archivo.end(), nombreArchivo);//strcpy(nombreArchivo, archivo.c_str());
 		agencia = new AgenciaMatrimonial<T>();
 		afiliado = NULL;
 	}
