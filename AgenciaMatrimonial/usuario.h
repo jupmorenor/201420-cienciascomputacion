@@ -14,11 +14,12 @@
 
 template <class T> class Usuario {
 protected:
-	static AgenciaMatrimonial<T> *agencia;
+
 	string nombreArchivo;
 	T *afiliado;
 	std::fstream archivoActivo;
 public:
+	static AgenciaMatrimonial<T> *agencia;
 	Usuario() {
 		nombreArchivo = "";
 		afiliado = NULL;

@@ -89,7 +89,7 @@ template <class T> void Administrador<T>::inicializar() {
 
 			registrarNuevoUsuario(this->afiliado);
 			registro = "";
-			stream.str(registro);
+			stream.str("");
 		}
 	}
 	this->archivoActivo.close();
@@ -266,6 +266,42 @@ template <class T> void Administrador<T>::mostrarPorSexoyCiudad(string ciudad, s
 			imprimir(this->afiliado);
 		}
 		this->afiliado = this->afiliado->sigPorSexo;
+	}
+}
+
+template<class T> void Administrador<T>::mostrarPorComplexionNivelAccPorCiudad(string complexion, string nvAcad){
+	Lista<T> *resultados = new Lista<T>();
+	nodoLista<T> *nodo, *aux;
+	string ciudad;
+	int i;
+	for(i=0;i<TAMS[2]; i++) {
+		if (nvAcad == NVACADEMICO[i]) {
+			break;
+		}
+	}
+	for (;i<TAMS[2]; i++) {
+		this->afiliado = this->agencia->buscarRegistro(LISTAS[2], NVACADEMICO[i]);
+		while(this->afiliado!=NULL) {
+			if(this->afiliado->complexion == complexion) {
+				resultados->insertarRegistro(this->afiliado);
+			}
+			this->afiliado = this->afiliado->sigPorNivelAcademico;
+		}
+	}
+	while (!resultados->listaVacia()) {
+		nodo = resultados->retornarPrimero();
+		ciudad = nodo->registro->ciudad;
+		std::cout << ciudad << std::endl;
+		while(nodo!=NULL) {
+			if (nodo->registro->ciudad == ciudad) {
+				imprimir(nodo->registro);
+				aux = nodo;
+				nodo = nodo->siguiente;
+				resultados->eliminarRegistro(aux->registro);
+			} else {
+				nodo = nodo->siguiente;
+			}
+		}
 	}
 }
 
