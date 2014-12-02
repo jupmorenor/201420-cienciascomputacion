@@ -1,0 +1,8 @@
+ *      Author: Juan pablo Moreno Rico - 20111020059
+ *      Author: Diana Cristhina Pérez Pérez - 20111020069
+
+El programa fue elaborado usando Eclipse para C/C++ y el compilador de MinGW que se obtiene 
+en http://sourceforge.net/projects/mingw/files/ y usando el estandar C++11
+El codigo del programa tambien se puede ver en:
+
+https://code.google.com/p/201420-cienciascomputacion/source/browse/#svn%2Ftrunk%2FAgenciaMatrimonial

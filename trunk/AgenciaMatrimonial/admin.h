@@ -28,6 +28,7 @@ public:
 	void mostrarPorHijosyCiudad(int hijos);
 	void mostrarPorSexoyEdad(string sexo, int edad);
 	void mostrarPorSexoyCiudad(string ciudad, string sexo);
+	void mostrarPorComplexionNivelAccPorCiudad(string complexion, string nvAcad);
 	void imprimir(T *aff);
 };
 

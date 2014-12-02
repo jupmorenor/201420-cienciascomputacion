@@ -73,7 +73,7 @@ template <class T> void UsuarioRegistrado<T>::mostrarPorCiudadNumeroHijos(string
 
 template <class T> void UsuarioRegistrado<T>::mostrarCombinado(string ojos, string estatura, bool hijos, string complexion) {
 	Lista<T> *resultados = new Lista<T>();
-	nodoLista<T> *nodo, aux;
+	nodoLista<T> *nodo, *aux;
 	this->afiliado = this->agencia->buscarRegistro(LISTAS[4], estatura);
 	while(this->afiliado!=NULL) {
 		if(this->afiliado->sexo != sexoUsuario) {
